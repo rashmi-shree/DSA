@@ -1,7 +1,7 @@
 var arr = [5,3,4,1]
 
 
-function isort(){
+function is(){
     for (let i = 1; i<arr.length ; i++){
         let current = arr[i]
         let j = i-1
@@ -15,4 +15,4 @@ function isort(){
     return arr
 }
 
-console.log(isort(arr))
+console.log(is(arr))
