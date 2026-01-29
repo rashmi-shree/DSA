@@ -23,3 +23,16 @@ for (let num of arr){
 }
 
 console.log(freq);
+
+
+const output = arr.reduce((acc, curr)=>{
+    if(acc[curr]){
+        acc[curr]++
+    }else{
+        acc[curr]=1
+    }
+    return acc
+},{})
+
+
+console.log(output);
