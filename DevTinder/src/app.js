@@ -1,7 +1,26 @@
 const express = require ("express")
-
 const app = express()
+const {connectDb} = require("./config/database")
+const {adminAuth} = require('./middlewares/auth')
+const User = require("./models/user")
 
+
+app.post("/signup", async(req, res)=>{
+    const user = new User({
+        firstName:"asdf",
+        lastName:"asf",
+        emailId:"asd@adsf.asd",
+        password:"asffds"
+    })
+
+    await user.save();
+    res.send("user added successfully")
+})
+
+app.use("/admin",adminAuth)
+app.get("/admin/getalldata", (req,res)=>{
+    res.send("all data sent")
+})
 app.use("/test", (req, res)=>{
     res.send("hello")
 })
@@ -20,12 +39,28 @@ app.get("/user/:userid", (req, res)=>{
 app.post("/user", (req,res)=>{
     res.send("data has been successfully saved in the db")
 })
-app.use((req,res)=>{
+
+app.get("/getUserData", (req, res)=>{
+    try{
+        throw new Error("asfdasf")
+        res.send("user data sent")
+    }catch(err){
+        res.status(500).send("Some error contact support team")
+    }
+})
+
+app.use("/",(req,res)=>{
     res.send("hello from the server")
     
 })
 
-app.listen(3000, ()=>{
-    console.log("server is listening on port 3000");
-    
-});
+connectDb()
+.then(()=>{
+    console.log("database connection established");
+    app.listen(3000, ()=>{
+        console.log("server is successfully listening on 3000");
+    })
+})
+.catch((err)=>{
+    console.error("database cannot be connected");
+})
