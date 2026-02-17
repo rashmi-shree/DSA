@@ -7,9 +7,7 @@ let fp = 0
 let sp = arr.length -1 
 
 while(fp <=sp){
-
     let mp = Math.floor((fp+sp)/2)
-
     if(arr[mp] === target){
         return (mp);
     }else if(target>arr[mp]){

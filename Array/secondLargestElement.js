@@ -1,14 +1,31 @@
 let arr =[1,2,4,7,7,5]
 
-let largest = arr[0], secondLargest = -1;
+let largest = secondLargest = -Infinity;
 
-for (let i =0 ; i< arr.length; i++){
-    if(arr[i]>largest   ){
-        secondLargest = largest
-        largest = arr[i]
+function secondLargestfn(arr){
+    for(let i = 0 ; i<arr.length; i++){
+        if(arr[i]>largest){
+            secondLargest=largest
+            largest = arr[i]
+        }else if(arr[i]>secondLargest && arr[i]!= largest){
+            secondLargest = arr[i]
+        }
     }
-    else if (arr[i] < largest && arr[i] > secondLargest) {
-        secondLargest = arr[i];
-    }
+    return secondLargest
 }
-console.log(secondLargest);
+console.log(secondLargestfn(arr));
+
+
+
+// let largest = arr[0], secondLargest = -1;
+
+// for (let i =0 ; i< arr.length; i++){
+//     if(arr[i]>largest   ){
+//         secondLargest = largest
+//         largest = arr[i]
+//     }
+//     else if (arr[i] < largest && arr[i] > secondLargest) {
+//         secondLargest = arr[i];
+//     }
+// }
+// console.log(secondLargest);
