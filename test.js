@@ -1,30 +1,21 @@
-var arr = [7, 12, 9, 11, 3]
+const arr = [1,2,3,5,6,7,8,9]
+const target = 3;
 
-// merge sort divide and conquer 
+function binarySearch(arr, target){
+    let fp =0;
+    let sp = arr.length -1
+    while(fp<=sp){
+        let mp = Math.floor((fp+sp)/2)
 
-function mergeSort(arr){
-    if(arr.length <=1) return arr;
-
-    let mid = Math.floor(arr.length/2)
-    let left = mergeSort(arr.slice(0,mid))
-    let right = mergeSort(arr.slice(mid))
-
-    return merge(left, right)
-}
-
-function merge(left, right){
-    let result = []
-    let i = j = 0;
-    while (i < left.length && j < right.length){
-        if(left[i]<right[j]){
-            result.push(left[i]);
-            i++;
+        if(arr[mp] === target){
+            return mp
+        }else if (arr[mp]< target){
+            fp = mp+1
         }else{
-            result.push(right[j]);
-            j++
+            sp = mp -1
         }
     }
-    return [...result, ...left.slice(i), ...right.slice(j)]
+return -1
 }
 
-console.log(mergeSort(arr));
+console.log(binarySearch(arr, target));
