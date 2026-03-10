@@ -1,21 +1,38 @@
-const arr = [1,2,3,5,6,7,8,9]
-const target = 3;
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
 
-function binarySearch(arr, target){
-    let fp =0;
-    let sp = arr.length -1
-    while(fp<=sp){
-        let mp = Math.floor((fp+sp)/2)
-
-        if(arr[mp] === target){
-            return mp
-        }else if (arr[mp]< target){
-            fp = mp+1
-        }else{
-            sp = mp -1
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    // floyd's algorithm (slow pointer and fast pointer)
+    if(!head) return false;
+    let slow = head;
+    let fast = head.next;
+    while(slow != fast){
+        if(fast === null || fast.next === null){
+            return false;
         }
+        slow = slow.next;
+        fast = fast.next.next
     }
-return -1
-}
-
-console.log(binarySearch(arr, target));
+    return true
+    
+    // using Set 
+    // let curr = head;
+    // let seenNodes = new Set();
+    // while(curr){
+    //     if(seenNodes.has(curr)){
+    //        return true
+    //     }
+    //     seenNodes.add(curr)
+    //     curr = curr.next
+    // }
+    // return false
+};
