@@ -38,5 +38,21 @@ const userSchema = mongoose.Schema({
     }
 }, { timestamps: true })
 
+//schema methods
+userSchema.methods.getJWT = async function(){
+    const user = this;
+
+    const token = await JsonWebTokenError.sign({_id: user._id}, "DEV@Tinder$123", {
+        expiresIn:"1d"
+    })
+    return token;
+}
+userSchema.methods.validatePassword = async function(passwordInputByUser){
+    const user = this;
+    const passwordHash = user.password;
+
+    const isPasswordValid = await bcrypt.compare(passwordInputByUser, passwordHash)
+    return isPasswordValid
+}
 const userModel = mongoose.model("user", userSchema)
 module.exports = userModel

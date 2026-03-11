@@ -3,22 +3,24 @@ const app = express()
 const {connectDb} = require("./config/database")
 const {adminAuth} = require('./middlewares/auth')
 const User = require("./models/user")
-
+const bcrypt = require("bcrypt")
+const cookieParser = require("cookie-parser")
+const jwt = require("jsonwebtoken")
+const {userAuth} = require("./middlewares/auth")
 app.use(express.json())
+app.use(cookieParser())
 
-app.post("/signup", async(req, res)=>{
-    console.log(req.body)
-    const user = new User(req.body)
-    try{
-        await user.save();
-        res.send("user added successfully")
-    }catch(err){
-        res.status(400).send("error while saving"+ err.message)
-    }
-})
+
+const {authRouter} = require("./routes/auth")
+const {profileRouter} = require("./routes/profile")
+const {requestRouter} = require("./routes/requests")
+
+app.use("/", authRouter)
+app.use("/", profileRouter)
+app.use("/", requestRouter)
 
 // get user by email
-app.get("/user", async (req, res)=>{
+app.get("/user",userAuth,  async (req, res)=>{
     try{
         const user = await User.find({emailId:req.body.emailId})
         res.send(user)
