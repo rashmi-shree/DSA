@@ -44,6 +44,13 @@ authRouter.get("/login", async(req, res)=>{
     }
 })
 
+authRouter.get("/logout", async(req, res)=>{
+    res.cookie("token", null, {
+        expires:new Date(Date.now())
+    })
+    res.send("logged out")
+})
+
 module.exports = {
     authRouter
 }
